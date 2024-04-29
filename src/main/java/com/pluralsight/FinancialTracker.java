@@ -93,20 +93,16 @@ public class FinancialTracker {
         String time = null;
         try {
             dateTime = LocalDateTime.parse(dateandtime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            //need to split date and time
             date = dateTime.toLocalDate().toString();
             time = dateTime.toLocalTime().toString();
 
         } catch (DateTimeParseException e) {
             System.out.println("Invalid date and time format. Please use (yyyy-MM-dd HH:mm:ss).");
-
         }
-
         System.out.println("Please enter the vendor name: ");
         String vendor = myScanner.nextLine();
         System.out.println("Enter your deposit amount: ");
         double amount = 0;
-
 
         try {
             amount = Double.parseDouble(myScanner.nextLine());
@@ -118,7 +114,6 @@ public class FinancialTracker {
         } catch (Exception e) {
             System.out.println("Invalid format, please try again!");
             return;
-
         }
 
         Transaction deposit = new Deposit(date, time, "deposit", vendor, amount);
@@ -214,6 +209,7 @@ public class FinancialTracker {
                     // Generate a report for all transactions within the previous year,
                     // including the date, vendor, and amount for each transaction.
                 case "5":
+                    System.out.println("Please enter the name of the Vendor: ");
                     // Prompt the user to enter a vendor name, then generate a report for all transactions
                     // with that vendor, including the date, vendor, and amount for each transaction.
                 case "0":
@@ -236,7 +232,7 @@ public class FinancialTracker {
 
     }
 
-    
+
     private static void filterTransactionsByVendor(String vendor) {
         // This method filters the transactions by vendor and prints a report to the console.
         // It takes one parameter: vendor, which represents the name of the vendor to filter by.
