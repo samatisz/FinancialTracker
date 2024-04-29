@@ -15,6 +15,7 @@ public class Transaction {
         this.price = price;
     }
 
+
     public double getPrice() {
         return price;
     }

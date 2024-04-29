@@ -89,9 +89,13 @@ public class FinancialTracker {
         String dateandtime = myScanner.nextLine();
         LocalDateTime dateTime = null; //nothing is here yet
 
+        String date = null;
+        String time = null;
         try {
             dateTime = LocalDateTime.parse(dateandtime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
             //need to split date and time
+            date = dateTime.toLocalDate().toString();
+            time = dateTime.toLocalTime().toString();
 
         } catch (DateTimeParseException e) {
             System.out.println("Invalid date and time format. Please use (yyyy-MM-dd HH:mm:ss).");
@@ -102,6 +106,7 @@ public class FinancialTracker {
         String vendor = myScanner.nextLine();
         System.out.println("Enter your deposit amount: ");
         double amount = 0;
+
 
         try {
             amount = Double.parseDouble(myScanner.nextLine());
@@ -115,7 +120,10 @@ public class FinancialTracker {
             return;
 
         }
-        //Transaction deposit = new Transaction();
+
+        Transaction deposit = new Deposit(date, time, "deposit", vendor, amount);
+        transactions.add(deposit);
+
 
     }
 
@@ -224,8 +232,11 @@ public class FinancialTracker {
         // The method loops through the transactions list and checks each transaction's date against the date range.
         // Transactions that fall within the date range are printed to the console.
         // If no transactions fall within the date range, the method prints a message indicating that there are no results.
+        boolean found = false;
+
     }
 
+    
     private static void filterTransactionsByVendor(String vendor) {
         // This method filters the transactions by vendor and prints a report to the console.
         // It takes one parameter: vendor, which represents the name of the vendor to filter by.
@@ -233,4 +244,6 @@ public class FinancialTracker {
         // Transactions with a matching vendor name are printed to the console.
         // If no transactions match the specified vendor name, the method prints a message indicating that there are no results.
     }
+
+
 }
