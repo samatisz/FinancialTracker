@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.Scanner;
 
 public class FinancialTracker {
 
-    private static ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+    private static ArrayList<Transaction> transactions = new ArrayList();
     private static final String FILE_NAME = "transactions.csv";
     private static final String DATE_FORMAT = "yyyy-MM-dd";
     private static final String TIME_FORMAT = "HH:mm:ss";
@@ -22,6 +23,12 @@ public class FinancialTracker {
 
     public static void main(String[] args) {
         loadTransactions(FILE_NAME);
+
+        //"transaction" is transaction.java while "transactions" is the array list (stored info in .csv)
+        for (Transaction transaction: transactions){
+            System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" +  " Type: " + transaction.getType() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + transaction.getPrice() + "\n");
+        }
+
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
 
@@ -57,16 +64,16 @@ public class FinancialTracker {
         scanner.close();
     }
 
-    public static void loadTransactions(String filename) {
-        //If the file does not exist, it should be created
+    public static void loadTransactions(String fileName) {
+
         try {
-            BufferedReader buff = new BufferedReader(new FileReader(filename));
+            BufferedReader buff = new BufferedReader(new FileReader(FILE_NAME));
             String line;
             while ((line = buff.readLine()) != null) {
                 String[] parts = line.split("\\|");
                 if (parts.length == 5) {
-                    String date = parts[0].trim();
-                    String time = parts[1].trim();
+                    LocalDate date = LocalDate.parse(parts[0]);
+                    LocalTime time = LocalTime.parse(parts[1]);
                     String type = parts[2].trim();
                     String vendor = parts[3].trim();
                     double price = Double.parseDouble(parts[4]);
@@ -75,7 +82,6 @@ public class FinancialTracker {
             }
 
             buff.close();
-
         } catch (Exception e) {
             System.out.println("Error loading inventory: " + e.getMessage());
         }
@@ -89,12 +95,12 @@ public class FinancialTracker {
         String dateandtime = myScanner.nextLine();
         LocalDateTime dateTime = null; //nothing is here yet
 
-        String date = null;
-        String time = null;
+        LocalDate date = null;
+        LocalTime time = null;
         try {
             dateTime = LocalDateTime.parse(dateandtime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            date = dateTime.toLocalDate().toString();
-            time = dateTime.toLocalTime().toString();
+            date = dateTime.toLocalDate();
+            time = dateTime.toLocalTime();
 
         } catch (DateTimeParseException e) {
             System.out.println("Invalid date and time format. Please use (yyyy-MM-dd HH:mm:ss).");

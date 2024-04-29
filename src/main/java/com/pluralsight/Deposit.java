@@ -1,13 +1,11 @@
 package com.pluralsight;
 
-public class Deposit extends Transaction{
-    private String date;
-    private String time;
-    private String type;
-    private String vendor;
-    private String price;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
-    public Deposit(String date, String time, String type, String vendor, double price) {
+public class Deposit extends Transaction{
+// do not need the objects cause this is an extension of Transaction.java
+    public Deposit(LocalDate date, LocalTime time, String type, String vendor, double price) {
         super(date, time, type, vendor, price);
     }
 }
