@@ -24,11 +24,6 @@ public class FinancialTracker {
     public static void main(String[] args) {
         loadTransactions(FILE_NAME);
 
-        //"transaction" is transaction.java while "transactions" is the array list (stored info in .csv)
-        for (Transaction transaction: transactions){
-            System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" +  " Type: " + transaction.getType() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + transaction.getPrice() + "\n");
-        }
-
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
 
@@ -77,7 +72,12 @@ public class FinancialTracker {
                     String type = parts[2].trim();
                     String vendor = parts[3].trim();
                     double price = Double.parseDouble(parts[4]);
-                    transactions.add(new Transaction(date, time, type, vendor, price));
+                    if (price >= 0) {
+                        transactions.add(new Deposit(date, time, type, vendor, price));
+                    } else {
+                        transactions.add(new Payment(date, time, type, vendor, price));
+
+                    }
                 }
             }
 
@@ -92,18 +92,19 @@ public class FinancialTracker {
         // After validating the input, a new `Deposit` object should be created with the entered values.
         // The new deposit should be added to the `transactions` ArrayList.
         System.out.println("Enter the date and time (yyyy-MM-dd HH:mm:ss) " );
-        String dateandtime = myScanner.nextLine();
+        String dateAndTime = myScanner.nextLine();
         LocalDateTime dateTime = null; //nothing is here yet
 
         LocalDate date = null;
         LocalTime time = null;
         try {
-            dateTime = LocalDateTime.parse(dateandtime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            dateTime = LocalDateTime.parse(dateAndTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
             date = dateTime.toLocalDate();
             time = dateTime.toLocalTime();
 
         } catch (DateTimeParseException e) {
             System.out.println("Invalid date and time format. Please use (yyyy-MM-dd HH:mm:ss).");
+            return;
         }
         System.out.println("Please enter the vendor name: ");
         String vendor = myScanner.nextLine();
@@ -128,12 +129,30 @@ public class FinancialTracker {
 
     }
 
-    private static void addPayment(Scanner scanner) {
-        // This method should prompt the user to enter the date, time, vendor, and amount of a payment.
-        // The user should enter the date and time in the following format: yyyy-MM-dd HH:mm:ss
-        // The amount should be a positive number.
-        // After validating the input, a new `Payment` object should be created with the entered values.
-        // The new payment should be added to the `transactions` ArrayList.
+    private static void addPayment(Scanner myScanner) {
+        System.out.println("Please enter the date and time: ");
+        String dateAndTime = myScanner.nextLine();
+        System.out.println("Please enter the vendor: ");
+        String vendor = myScanner.nextLine();
+        System.out.println("Please enter the amount of payment:");
+        double price = Double.parseDouble(myScanner.nextLine());
+        try {
+            LocalDateTime dateTime = LocalDateTime.parse(dateAndTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            LocalDate date = dateTime.toLocalDate();
+            LocalTime time = dateTime.toLocalTime();
+
+            if(price <= 0){
+                System.out.println("Invalid! Please enter a positive number!");
+                return;
+            }
+
+            Transaction payment = new Payment(date, time, "payment", vendor, price);
+            transactions.add(payment);
+
+        } catch (Exception e) {
+            System.out.println("Invalid format, please try again!");
+        }
+
     }
 
     private static void ledgerMenu(Scanner scanner) {
@@ -141,7 +160,7 @@ public class FinancialTracker {
         while (running) {
             System.out.println("Ledger");
             System.out.println("Choose an option:");
-            System.out.println("A) A`ll");
+            System.out.println("A) All");
             System.out.println("D) Deposits");
             System.out.println("P) Payments");
             System.out.println("R) Reports");
@@ -172,18 +191,31 @@ public class FinancialTracker {
     }
 
     private static void displayLedger() {
-        // This method should display a table of all transactions in the `transactions` ArrayList.
+        for (Transaction transaction: transactions){
+            //"transaction" is transaction.java while "transactions" is the array list (stored info in .csv)
+            System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" +  " Type: " + transaction.getType() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + transaction.getPrice() + "\n");
+        }
         // The table should have columns for date, time, vendor, type, and amount.
     }
 
     private static void displayDeposits() {
         // This method should display a table of all deposits in the `transactions` ArrayList.
         // The table should have columns for date, time, vendor, and amount.
+        for (Transaction transaction: transactions) {
+            if (transaction instanceof Deposit) {
+                //"transaction" is transaction.java while "transactions" is the array list (stored info in .csv)
+                System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Type: " + transaction.getType() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + transaction.getPrice() + "\n");
+            }
+        }
     }
 
     private static void displayPayments() {
-        // This method should display a table of all payments in the `transactions` ArrayList.
-        // The table should have columns for date, time, vendor, and amount.
+        for (Transaction transaction: transactions) {
+            if (transaction instanceof Payment) {
+                //"transaction" is transaction.java while "transactions" is the array list (stored info in .csv)
+                System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Type: " + transaction.getType() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + transaction.getPrice() + "\n");
+            }
+        }
     }
 
     private static void reportsMenu(Scanner scanner) {
