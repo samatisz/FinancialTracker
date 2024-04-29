@@ -5,7 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -60,15 +62,16 @@ public class FinancialTracker {
         try {
             BufferedReader buff = new BufferedReader(new FileReader(filename));
             String line;
-            while ((line = buff.readLine()) != null);
-            String [] parts = line.split("\\|");
-            if (parts.length == 5){
-                String date = parts[0].trim();
-                String time = parts[1].trim();
-                String type = parts[2].trim();
-                String vendor = parts[3].trim();
-                double price = Double.parseDouble(parts[4]);
-                transactions.add(new Transaction(date, time, type, vendor, price));
+            while ((line = buff.readLine()) != null) {
+                String[] parts = line.split("\\|");
+                if (parts.length == 5) {
+                    String date = parts[0].trim();
+                    String time = parts[1].trim();
+                    String type = parts[2].trim();
+                    String vendor = parts[3].trim();
+                    double price = Double.parseDouble(parts[4]);
+                    transactions.add(new Transaction(date, time, type, vendor, price));
+                }
             }
 
             buff.close();
@@ -79,15 +82,40 @@ public class FinancialTracker {
 
     }
 
-    private static void addDeposit(Scanner scanner) {
-        // This method should prompt the user to enter the date, time, vendor, and amount of a deposit.
-        // The user should enter the date and time in the following format: yyyy-MM-dd HH:mm:ss
-        // The amount should be a positive number.
+    private static void addDeposit(Scanner myScanner) {
         // After validating the input, a new `Deposit` object should be created with the entered values.
         // The new deposit should be added to the `transactions` ArrayList.
-        System.out.println("Enter the date: " + DATE_FORMATTER);
-        System.out.println("Enter the time: " + TIME_FORMATTER);
+        System.out.println("Enter the date and time (yyyy-MM-dd HH:mm:ss) " );
+        String dateandtime = myScanner.nextLine();
+        LocalDateTime dateTime = null; //nothing is here yet
 
+        try {
+            dateTime = LocalDateTime.parse(dateandtime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            //need to split date and time
+
+        } catch (DateTimeParseException e) {
+            System.out.println("Invalid date and time format. Please use (yyyy-MM-dd HH:mm:ss).");
+
+        }
+
+        System.out.println("Please enter the vendor name: ");
+        String vendor = myScanner.nextLine();
+        System.out.println("Enter your deposit amount: ");
+        double amount = 0;
+
+        try {
+            amount = Double.parseDouble(myScanner.nextLine());
+            if (amount <= 0) {
+                System.out.println("Invalid! Please enter a positive number!");
+                return;
+            }
+
+        } catch (Exception e) {
+            System.out.println("Invalid format, please try again!");
+            return;
+
+        }
+        //Transaction deposit = new Transaction();
 
     }
 
