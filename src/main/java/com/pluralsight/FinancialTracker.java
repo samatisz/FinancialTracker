@@ -1,13 +1,10 @@
 package com.pluralsight;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -291,13 +288,8 @@ public class FinancialTracker {
                 case "5":
                     System.out.println("Please enter the name of the Vendor: ");
                     String vendorName = myScanner.nextLine();
+                    filterTransactionsByVendor(vendorName);
 
-                    for(Transaction transaction: transactions){
-                        if(vendorName.equals(transaction.getVendor())){
-                            double makeItPositive = Math.abs(transaction.getPrice());
-                            System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Type: " + transaction.getType() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + makeItPositive + "\n");
-                        }
-                    }
                     break;
 
                 case "0":
@@ -328,22 +320,18 @@ public class FinancialTracker {
         if(!found){
             System.out.println("There are no results found, please try again!");
         }
-        // This method filters the transactions by date and prints a report to the console.
-        // It takes two parameters: startDate and endDate, which represent the range of dates to filter by.
-        // The method loops through the transactions list and checks each transaction's date against the date range.
-        // Transactions that fall within the date range are printed to the console.
-        // If no transactions fall within the date range, the method prints a message indicating that there are no results.
-
     }
-
-
-    private static void filterTransactionsByVendor(String vendor) {
-        // This method filters the transactions by vendor and prints a report to the console.
-        // It takes one parameter: vendor, which represents the name of the vendor to filter by.
-        // The method loops through the transactions list and checks each transaction's vendor name against the specified vendor name.
-        // Transactions with a matching vendor name are printed to the console.
-        // If no transactions match the specified vendor name, the method prints a message indicating that there are no results.
+    private static void filterTransactionsByVendor(String vendorName) {
+        boolean found = false;
+        for(Transaction transaction: transactions){
+            if(vendorName.equals(transaction.getVendor())){
+                double makeItPositive = Math.abs(transaction.getPrice());
+                System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Type: " + transaction.getType() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + makeItPositive + "\n");
+                found = true;
+            }
+        }
+        if(!found){
+            System.out.println("There are no results found, please try again!");
+        }
     }
-
-
 }
