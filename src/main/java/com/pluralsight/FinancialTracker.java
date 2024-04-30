@@ -180,6 +180,7 @@ public class FinancialTracker {
                     break;
                 case "H":
                     running = false;
+                    break;
                 default:
                     System.out.println("Invalid option");
                     break;
