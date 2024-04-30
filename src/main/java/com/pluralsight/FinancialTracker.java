@@ -4,9 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -213,12 +211,13 @@ public class FinancialTracker {
         for (Transaction transaction: transactions) {
             if (transaction instanceof Payment) {
                 //"transaction" is transaction.java while "transactions" is the array list (stored info in .csv)
-                System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Type: " + transaction.getType() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + transaction.getPrice() + "\n");
+                double makeItPositive = Math.abs(transaction.getPrice());
+                System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Type: " + transaction.getType() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + makeItPositive + "\n");
             }
         }
     }
 
-    private static void reportsMenu(Scanner scanner) {
+    private static void reportsMenu(Scanner myScanner) {
         boolean running = true;
         while (running) {
             System.out.println("Reports");
@@ -230,30 +229,98 @@ public class FinancialTracker {
             System.out.println("5) Search by Vendor");
             System.out.println("0) Back");
 
-            String input = scanner.nextLine().trim();
+            String input = myScanner.nextLine().trim();
 
             switch (input) {
                 case "1":
-                    // Generate a report for all transactions within the current month,
-                    // including the date, vendor, and amount for each transaction.
+                    System.out.println("Here are all transactions from the current month.");
+
+                    LocalDate currentDate = LocalDate.now();
+                    Month currentMonth = currentDate.getMonth();
+
+                    System.out.println("Current month is: " + currentMonth);
+
+                    for(Transaction transaction: transactions){
+                        Month workingDate = transaction.getDate().getMonth();
+                        if(currentMonth == workingDate){
+                            double makeItPositive = Math.abs(transaction.getPrice());
+                            System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Type: " + transaction.getType() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + makeItPositive + "\n");
+                        }
+                    }
+
+                    break;
+
                 case "2":
-                    // Generate a report for all transactions within the previous month,
-                    // including the date, vendor, and amount for each transaction.
+                    System.out.println("Here are all transactions from the previous month.");
+
+                    currentDate = LocalDate.now();
+                    currentDate = currentDate.minusMonths(1);
+                    currentMonth = currentDate.getMonth();
+
+                    System.out.println("Previous month is: " + currentMonth);
+
+                    for(Transaction transaction: transactions){
+                        Month workingDate = transaction.getDate().getMonth();
+                        if(currentMonth == workingDate){
+                            double makeItPositive = Math.abs(transaction.getPrice());
+                            System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Type: " + transaction.getType() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + makeItPositive + "\n");
+                        }
+                    }
+                    break;
+
                 case "3":
-                    // Generate a report for all transactions within the current year,
-                    // including the date, vendor, and amount for each transaction.
+                    System.out.println("Here are all transactions from the current year.");
+
+                    currentDate = LocalDate.now();
+                    int currentYear = currentDate.getYear();
+
+                    System.out.println("Current year is: " + currentYear);
+
+                    for(Transaction transaction: transactions){
+                        int workingDate = transaction.getDate().getYear();
+                        if(currentYear == workingDate){
+                            double makeItPositive = Math.abs(transaction.getPrice());
+                            System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Type: " + transaction.getType() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + makeItPositive + "\n");
+                        }
+                    }
+                    break;
 
                 case "4":
-                    // Generate a report for all transactions within the previous year,
-                    // including the date, vendor, and amount for each transaction.
+                    System.out.println("Here are all transactions from the previous year.");
+
+                    currentDate = LocalDate.now();
+                    currentDate = currentDate.minusYears(1);
+                    currentYear = currentDate.getYear();
+
+                    System.out.println("The previous year is " + currentYear);
+
+                    for(Transaction transaction: transactions){
+                        int workingDate = transaction.getDate().getYear();
+                        if(currentYear == workingDate){
+                            double makeItPositive = Math.abs(transaction.getPrice());
+                            System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Type: " + transaction.getType() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + makeItPositive + "\n");
+                        }
+                    }
+                    break;
+
                 case "5":
                     System.out.println("Please enter the name of the Vendor: ");
-                    // Prompt the user to enter a vendor name, then generate a report for all transactions
-                    // with that vendor, including the date, vendor, and amount for each transaction.
+                    String vendorName = myScanner.nextLine();
+
+                    for(Transaction transaction: transactions){
+                        if(vendorName.equals(transaction.getVendor())){
+                            double makeItPositive = Math.abs(transaction.getPrice());
+                            System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Type: " + transaction.getType() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + makeItPositive + "\n");
+                        }
+                    }
+                    break;
+
                 case "0":
                     running = false;
+                    break;
+
                 default:
-                    System.out.println("Invalid option");
+                    System.out.println("Invalid option! Please try again!");
                     break;
             }
         }
