@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -240,13 +242,8 @@ public class FinancialTracker {
 
                     System.out.println("Current month is: " + currentMonth);
 
-                    for(Transaction transaction: transactions){
-                        Month workingDate = transaction.getDate().getMonth();
-                        if(currentMonth == workingDate){
-                            double makeItPositive = Math.abs(transaction.getPrice());
-                            System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Type: " + transaction.getType() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + makeItPositive + "\n");
-                        }
-                    }
+                    LocalDate startOfMonth = currentDate.withDayOfMonth(1);
+                    filterTransactionsByDate(startOfMonth, currentDate);
 
                     break;
 
@@ -259,13 +256,10 @@ public class FinancialTracker {
 
                     System.out.println("Previous month is: " + currentMonth);
 
-                    for(Transaction transaction: transactions){
-                        Month workingDate = transaction.getDate().getMonth();
-                        if(currentMonth == workingDate){
-                            double makeItPositive = Math.abs(transaction.getPrice());
-                            System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Type: " + transaction.getType() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + makeItPositive + "\n");
-                        }
-                    }
+                    startOfMonth = currentDate.withDayOfMonth(1);
+                    LocalDate lastOfMonth = currentDate.with(TemporalAdjusters.lastDayOfMonth());
+                    filterTransactionsByDate(startOfMonth, lastOfMonth);
+
                     break;
 
                 case "3":
@@ -276,13 +270,8 @@ public class FinancialTracker {
 
                     System.out.println("Current year is: " + currentYear);
 
-                    for(Transaction transaction: transactions){
-                        int workingDate = transaction.getDate().getYear();
-                        if(currentYear == workingDate){
-                            double makeItPositive = Math.abs(transaction.getPrice());
-                            System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Type: " + transaction.getType() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + makeItPositive + "\n");
-                        }
-                    }
+                    LocalDate startOfYear = currentDate.withDayOfYear(1);
+                    filterTransactionsByDate(startOfYear, currentDate);
                     break;
 
                 case "4":
@@ -294,13 +283,9 @@ public class FinancialTracker {
 
                     System.out.println("The previous year is " + currentYear);
 
-                    for(Transaction transaction: transactions){
-                        int workingDate = transaction.getDate().getYear();
-                        if(currentYear == workingDate){
-                            double makeItPositive = Math.abs(transaction.getPrice());
-                            System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Type: " + transaction.getType() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + makeItPositive + "\n");
-                        }
-                    }
+                    startOfYear = currentDate.withDayOfYear(1);
+                    LocalDate lastOfYear = currentDate.with(TemporalAdjusters.lastDayOfYear());
+                    filterTransactionsByDate(startOfYear, lastOfYear);
                     break;
 
                 case "5":
@@ -328,12 +313,26 @@ public class FinancialTracker {
 
 
     private static void filterTransactionsByDate(LocalDate startDate, LocalDate endDate) {
+        boolean found = false;
+        for(Transaction transaction: transactions){
+            // We want >=, but that doesn't exist. Instead, we use not <
+            boolean afterDate = !transaction.getDate().isBefore(startDate);
+            boolean beforeDate = !transaction.getDate().isAfter(endDate);
+
+            if(afterDate && beforeDate){
+                double makeItPositive = Math.abs(transaction.getPrice());
+                System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Type: " + transaction.getType() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + makeItPositive + "\n");
+                found = true;
+            }
+        }
+        if(!found){
+            System.out.println("There are no results found, please try again!");
+        }
         // This method filters the transactions by date and prints a report to the console.
         // It takes two parameters: startDate and endDate, which represent the range of dates to filter by.
         // The method loops through the transactions list and checks each transaction's date against the date range.
         // Transactions that fall within the date range are printed to the console.
         // If no transactions fall within the date range, the method prints a message indicating that there are no results.
-        boolean found = false;
 
     }
 
