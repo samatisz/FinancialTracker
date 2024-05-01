@@ -64,13 +64,13 @@ public class FinancialTracker {
                 if (parts.length == 5) {
                     LocalDate date = LocalDate.parse(parts[0]);
                     LocalTime time = LocalTime.parse(parts[1]);
-                    String type = parts[2].trim();
+                    String description = parts[2].trim();
                     String vendor = parts[3].trim();
-                    double price = Double.parseDouble(parts[4]);
-                    if (price >= 0) {
-                        transactions.add(new Deposit(date, time, type, vendor, price));
+                    double amount = Double.parseDouble(parts[4]);
+                    if (amount >= 0) {
+                        transactions.add(new Deposit(date, time, description, vendor, amount));
                     } else {
-                        transactions.add(new Payment(date, time, type, vendor, price));
+                        transactions.add(new Payment(date, time, description, vendor, amount));
                     }
                 }
             }
@@ -83,9 +83,9 @@ public class FinancialTracker {
 
     private static void addDeposit(Scanner myScanner) {
 
-        System.out.println("Enter the date (yyyy-MM-dd): " );
-        String date = myScanner.nextLine();
-        LocalDate dateString = LocalDate.parse(date, DATE_FORMATTER);
+        System.out.println("Enter the date (yyyy-MM-dd): ");
+        String dateString = myScanner.nextLine();
+        LocalDate date = LocalDate.parse(dateString, DATE_FORMATTER);
 
         System.out.println("Please enter the time (HH:mm:ss): ");
         String timeString = myScanner.nextLine();
@@ -104,14 +104,15 @@ public class FinancialTracker {
             System.out.println("Invalid amount, Please try again");
             return;
         }
-        Transaction deposit = new Transaction(dateString, time, description, vendor, amount);
+        Transaction deposit = new Transaction(date, time, description, vendor, amount);
         transactions.add(deposit);
 
         try {
 
             BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true));
-            writer.write(dateString + "|" + timeString + "|" + description + "|" + vendor + "|" + amount);
+            writer.write(date.format(DATE_FORMATTER) + "|" + time.format(TIME_FORMATTER) + "|" + description + "|" + vendor + "|" + amount);
             writer.newLine();
+            System.out.println("The deposit has been added successfully!");
             writer.close();
         } catch (Exception e) {
             System.out.println("Please enter again, invalid!");
@@ -119,10 +120,9 @@ public class FinancialTracker {
     }
 
     private static void addPayment(Scanner myScanner) {
-        //needs bufferedReader and bufferedWriter
         System.out.println("Please enter the date (yyyy-MM-dd-): ");
-        String date = myScanner.nextLine();
-        LocalDate dateString = LocalDate.parse(date, DATE_FORMATTER);
+        String dateString = myScanner.nextLine();
+        LocalDate date = LocalDate.parse(dateString, DATE_FORMATTER);
 
         System.out.println("Please enter the time (HH:mm:ss): ");
         String timeString = myScanner.nextLine();
@@ -134,21 +134,27 @@ public class FinancialTracker {
         System.out.println("Please enter the vendor: ");
         String vendor = myScanner.nextLine();
 
-        System.out.println("Please enter the amount of payment:");
-        double price = Double.parseDouble(myScanner.nextLine());
-        
+        System.out.println("Please enter the payment amount: ");
+        double amount = Double.parseDouble(myScanner.nextLine());
+        if (amount <= 0) {
+            System.out.println("Invalid amount! Please try again!");
+            return;
+        }
+        amount *= -1;
+
+        Transaction payment = (new Transaction(date, time, description, vendor, amount));
+        transactions.add(payment);
+
+
         try {
 
-            if(price <= 0){
-                System.out.println("Invalid! Please enter a positive number!");
-                return;
-            }
-
-            Transaction payment = new Payment(dateString, time, description, vendor, price);
-            transactions.add(payment);
-
+            BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true));
+            writer.write(date.format(DATE_FORMATTER)+ "|" + time.format(TIME_FORMATTER)+ "|" + description + "|" + vendor + "|" + amount);
+            writer.newLine();
+            System.out.println("The payment has been added successfully!");
+            writer.close();
         } catch (Exception e) {
-            System.out.println("Invalid format, please try again!");
+            System.out.println("Invalid! Please try again!");
         }
 
     }
@@ -190,9 +196,9 @@ public class FinancialTracker {
     }
 
     private static void displayLedger() {
-        for (Transaction transaction: transactions){
+        for (Transaction transaction : transactions) {
             //"transaction" is transaction.java while "transactions" is the array list (stored info in .csv)
-            System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" +  " Type: " + transaction.getDescription() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + transaction.getAmount() + "\n");
+            System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Type: " + transaction.getDescription() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + transaction.getAmount() + "\n");
         }
         // The table should have columns for date, time, vendor, type, and amount.
     }
@@ -200,20 +206,19 @@ public class FinancialTracker {
     private static void displayDeposits() {
         // This method should display a table of all deposits in the `transactions` ArrayList.
         // The table should have columns for date, time, vendor, and amount.
-        for (Transaction transaction: transactions) {
+        for (Transaction transaction : transactions) {
             if (transaction instanceof Deposit) {
                 //"transaction" is transaction.java while "transactions" is the array list (stored info in .csv)
-                System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Type: " + transaction.getDescription() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + transaction.getAmount() + "\n");
+                System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Description: " + transaction.getDescription() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Amount: " + transaction.getAmount() + "\n");
             }
         }
     }
 
     private static void displayPayments() {
-        for (Transaction transaction: transactions) {
+        for (Transaction transaction : transactions) {
             if (transaction instanceof Payment) {
                 //"transaction" is transaction.java while "transactions" is the array list (stored info in .csv)
-                double makeItPositive = Math.abs(transaction.getAmount());
-                System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Type: " + transaction.getDescription() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + makeItPositive + "\n");
+                System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Description: " + transaction.getDescription() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Amount: " + transaction.getAmount() + "\n");
             }
         }
     }
@@ -308,31 +313,37 @@ public class FinancialTracker {
 
     private static void filterTransactionsByDate(LocalDate startDate, LocalDate endDate) {
         boolean found = false;
-        for(Transaction transaction: transactions){
-            // We want >=, but that doesn't exist. Instead, we use not <
+        for (Transaction transaction : transactions) {
+       /*     // We want >=, but that doesn't exist. Instead, we use not <
             boolean afterDate = !transaction.getDate().isBefore(startDate);
             boolean beforeDate = !transaction.getDate().isAfter(endDate);
 
-            if(afterDate && beforeDate){
+            if (afterDate && beforeDate) {
                 double makeItPositive = Math.abs(transaction.getAmount());
                 System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Type: " + transaction.getDescription() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + makeItPositive + "\n");
                 found = true;
+            }*/
+
+            if (transaction.getDate().isAfter(startDate.minusDays(1)) && transaction.getDate().isBefore(endDate.plusDays(1))) {
+                System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Type: " + transaction.getDescription() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + transaction.getAmount() + "\n");
+                found = true;
             }
         }
-        if(!found){
+        if (!found) {
             System.out.println("There are no results found, please try again!");
         }
     }
+
     private static void filterTransactionsByVendor(String vendorName) {
         boolean found = false;
-        for(Transaction transaction: transactions){
-            if(vendorName.equals(transaction.getVendor())){
-                double makeItPositive = Math.abs(transaction.getAmount());
-                System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Type: " + transaction.getDescription() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + makeItPositive + "\n");
+        for (Transaction transaction : transactions) {
+            if (vendorName.equalsIgnoreCase(transaction.getVendor())) {
+
+                System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Type: " + transaction.getDescription() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + transaction.getAmount() + "\n");
                 found = true;
             }
         }
-        if(!found){
+        if (!found) {
             System.out.println("There are no results found, please try again!");
         }
     }
