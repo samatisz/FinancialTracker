@@ -104,7 +104,7 @@ public class FinancialTracker {
             System.out.println("Invalid amount, Please try again");
             return;
         }
-        Transaction deposit = new Transaction(date, time, description, vendor, amount);
+        Transaction deposit = new Deposit(date, time, description, vendor, amount);
         transactions.add(deposit);
 
         try {
@@ -142,7 +142,7 @@ public class FinancialTracker {
         }
         amount *= -1;
 
-        Transaction payment = (new Transaction(date, time, description, vendor, amount));
+        Transaction payment = (new Payment(date, time, description, vendor, amount));
         transactions.add(payment);
 
 
@@ -254,14 +254,13 @@ public class FinancialTracker {
                 case "2":
                     System.out.println("Here are all transactions from the previous month.");
 
-                    currentDate = LocalDate.now();
-                    currentDate = currentDate.minusMonths(1);
-                    currentMonth = currentDate.getMonth();
+                   LocalDate previousDate = LocalDate.now().minusMonths(1);
+                    currentMonth = previousDate.getMonth();
 
                     System.out.println("Previous month is: " + currentMonth);
 
-                    startOfMonth = currentDate.withDayOfMonth(1);
-                    LocalDate lastOfMonth = currentDate.with(TemporalAdjusters.lastDayOfMonth());
+                    startOfMonth = previousDate.withDayOfMonth(1);
+                    LocalDate lastOfMonth = previousDate.with(TemporalAdjusters.lastDayOfMonth());
                     filterTransactionsByDate(startOfMonth, lastOfMonth);
 
                     break;
@@ -281,14 +280,12 @@ public class FinancialTracker {
                 case "4":
                     System.out.println("Here are all transactions from the previous year.");
 
-                    currentDate = LocalDate.now();
-                    currentDate = currentDate.minusYears(1);
-                    currentYear = currentDate.getYear();
+                    LocalDate previousYear = LocalDate.now().minusYears(1);
 
-                    System.out.println("The previous year is " + currentYear);
+                    System.out.println("The previous year is " + previousYear.getYear());
 
-                    startOfYear = currentDate.withDayOfYear(1);
-                    LocalDate lastOfYear = currentDate.with(TemporalAdjusters.lastDayOfYear());
+                    startOfYear = previousYear.withDayOfYear(1);
+                    LocalDate lastOfYear = previousYear.with(TemporalAdjusters.lastDayOfYear());
                     filterTransactionsByDate(startOfYear, lastOfYear);
                     break;
 
@@ -314,15 +311,6 @@ public class FinancialTracker {
     private static void filterTransactionsByDate(LocalDate startDate, LocalDate endDate) {
         boolean found = false;
         for (Transaction transaction : transactions) {
-       /*     // We want >=, but that doesn't exist. Instead, we use not <
-            boolean afterDate = !transaction.getDate().isBefore(startDate);
-            boolean beforeDate = !transaction.getDate().isAfter(endDate);
-
-            if (afterDate && beforeDate) {
-                double makeItPositive = Math.abs(transaction.getAmount());
-                System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Type: " + transaction.getDescription() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + makeItPositive + "\n");
-                found = true;
-            }*/
 
             if (transaction.getDate().isAfter(startDate.minusDays(1)) && transaction.getDate().isBefore(endDate.plusDays(1))) {
                 System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Type: " + transaction.getDescription() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + transaction.getAmount() + "\n");
