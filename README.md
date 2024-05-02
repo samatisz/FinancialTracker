@@ -1,4 +1,4 @@
-# Project Title
+# Financial Tracker
 
 ## Description of the Project
 
