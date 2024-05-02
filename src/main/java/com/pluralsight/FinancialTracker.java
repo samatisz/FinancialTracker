@@ -111,6 +111,7 @@ public class FinancialTracker {
 
             BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true));
             writer.write(date.format(DATE_FORMATTER) + "|" + time.format(TIME_FORMATTER) + "|" + description + "|" + vendor + "|" + amount);
+            System.out.println("===================================================================================================================================");
             writer.newLine();
             System.out.println("The deposit has been added successfully!");
             writer.close();
@@ -150,6 +151,7 @@ public class FinancialTracker {
 
             BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true));
             writer.write(date.format(DATE_FORMATTER)+ "|" + time.format(TIME_FORMATTER)+ "|" + description + "|" + vendor + "|" + amount);
+            System.out.println("===================================================================================================================================");
             writer.newLine();
             System.out.println("The payment has been added successfully!");
             writer.close();
@@ -199,6 +201,7 @@ public class FinancialTracker {
         for (Transaction transaction : transactions) {
             //"transaction" is transaction.java while "transactions" is the array list (stored info in .csv)
             System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Type: " + transaction.getDescription() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + transaction.getAmount() + "\n");
+            System.out.println("===================================================================================================================================");
         }
         // The table should have columns for date, time, vendor, type, and amount.
     }
@@ -210,6 +213,7 @@ public class FinancialTracker {
             if (transaction instanceof Deposit) {
                 //"transaction" is transaction.java while "transactions" is the array list (stored info in .csv)
                 System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Description: " + transaction.getDescription() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Amount: " + transaction.getAmount() + "\n");
+                System.out.println("===================================================================================================================================");
             }
         }
     }
@@ -219,6 +223,7 @@ public class FinancialTracker {
             if (transaction instanceof Payment) {
                 //"transaction" is transaction.java while "transactions" is the array list (stored info in .csv)
                 System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Description: " + transaction.getDescription() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Amount: " + transaction.getAmount() + "\n");
+                System.out.println("===================================================================================================================================");
             }
         }
     }
@@ -314,6 +319,7 @@ public class FinancialTracker {
 
             if (transaction.getDate().isAfter(startDate.minusDays(1)) && transaction.getDate().isBefore(endDate.plusDays(1))) {
                 System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Type: " + transaction.getDescription() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + transaction.getAmount() + "\n");
+                System.out.println("===================================================================================================================================");
                 found = true;
             }
         }
@@ -328,6 +334,7 @@ public class FinancialTracker {
             if (vendorName.equalsIgnoreCase(transaction.getVendor())) {
 
                 System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Type: " + transaction.getDescription() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + transaction.getAmount() + "\n");
+                System.out.println("===================================================================================================================================");
                 found = true;
             }
         }

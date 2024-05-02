@@ -57,12 +57,6 @@ Include screenshots or GIFs that show your application in action. Use tools like
 ![Screenshot 2024-05-02 152954](https://github.com/samatisz/FinancialTracker/assets/166551695/4e155143-6956-40be-9fda-06fe2f71ba87)
 ![Screenshot 2024-05-02 153013](https://github.com/samatisz/FinancialTracker/assets/166551695/bea9bb7a-734e-4703-8fdb-229575a51176)
 
-
-
-
-
-
-
 ## Future Work
 
 Outline potential future enhancements or functionalities you might consider adding:
