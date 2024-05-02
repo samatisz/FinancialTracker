@@ -43,7 +43,8 @@ Follow these steps to get your application running within IntelliJ IDEA:
 
 Include screenshots or GIFs that show your application in action. Use tools like [Giphy Capture](https://giphy.com/apps/giphycapture) to record a GIF of your application.
 
-![Application Screenshot](path/to/your/screenshot.png)
+![![image](https://github.com/samatisz/FinancialTracker/assets/166551695/54b4771a-63d1-483e-886a-3d6572ae20f8)
+](path/to/your/screenshot.png)
 
 ## Future Work
 
