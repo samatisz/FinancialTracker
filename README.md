@@ -40,7 +40,7 @@ Follow these steps to get your application running within IntelliJ IDEA:
 
 Here are some screenshots of the program, showing the methods and classes used to create it. 
 
-PUT HERE
+PUT IMG HERE
 
 ## Future Work
 
