@@ -1,4 +1,4 @@
-# Financial Tracker Application
+# MyFinancialTracker Application
 
 ## Description of the Project
 
