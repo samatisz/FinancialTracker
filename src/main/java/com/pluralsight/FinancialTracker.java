@@ -23,8 +23,10 @@ public class FinancialTracker {
         boolean running = true;
 
         while (running) {
-            System.out.println("Welcome to TransactionApp");
+            System.out.println("Welcome to MyTransactionApp!");
+            System.out.println("============================");
             System.out.println("Choose an option:");
+            System.out.println(" ");
             System.out.println("D) Add Deposit");
             System.out.println("P) Make Payment (Debit)");
             System.out.println("L) Ledger");
@@ -111,7 +113,7 @@ public class FinancialTracker {
 
             BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true));
             writer.write(date.format(DATE_FORMATTER) + "|" + time.format(TIME_FORMATTER) + "|" + description + "|" + vendor + "|" + amount);
-            System.out.println("============================================================_=======================================================================");
+            System.out.println("。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。");
             writer.newLine();
             System.out.println("The deposit has been added successfully!");
             writer.close();
@@ -151,7 +153,7 @@ public class FinancialTracker {
 
             BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true));
             writer.write(date.format(DATE_FORMATTER)+ "|" + time.format(TIME_FORMATTER)+ "|" + description + "|" + vendor + "|" + amount);
-            System.out.println("===================================================================================================================================");
+            System.out.println("。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。");
             writer.newLine();
             System.out.println("The payment has been added successfully!");
             writer.close();
@@ -165,7 +167,9 @@ public class FinancialTracker {
         boolean running = true;
         while (running) {
             System.out.println("Ledger");
+            System.out.println("======");
             System.out.println("Choose an option:");
+            System.out.println(" ");
             System.out.println("A) All");
             System.out.println("D) Deposits");
             System.out.println("P) Payments");
@@ -201,7 +205,7 @@ public class FinancialTracker {
         for (Transaction transaction : transactions) {
             //"transaction" is transaction.java while "transactions" is the array list (stored info in .csv)
             System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Type: " + transaction.getDescription() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + transaction.getAmount() + "\n");
-            System.out.println("===================================================================================================================================");
+            System.out.println("。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。");
         }
     }
 
@@ -210,7 +214,7 @@ public class FinancialTracker {
             if (transaction instanceof Deposit) {
                 //"transaction" is transaction.java while "transactions" is the array list (stored info in .csv)
                 System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Description: " + transaction.getDescription() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Amount: " + transaction.getAmount() + "\n");
-                System.out.println("===================================================================================================================================");
+                System.out.println("。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。");
             }
         }
     }
@@ -220,7 +224,7 @@ public class FinancialTracker {
             if (transaction instanceof Payment) {
                 //"transaction" is transaction.java while "transactions" is the array list (stored info in .csv)
                 System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Description: " + transaction.getDescription() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Amount: " + transaction.getAmount() + "\n");
-                System.out.println("===================================================================================================================================");
+                System.out.println("。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。");
             }
         }
     }
@@ -229,7 +233,9 @@ public class FinancialTracker {
         boolean running = true;
         while (running) {
             System.out.println("Reports");
+            System.out.println("========");
             System.out.println("Choose an option:");
+            System.out.println(" ");
             System.out.println("1) Month To Date");
             System.out.println("2) Previous Month");
             System.out.println("3) Year To Date");
@@ -316,7 +322,7 @@ public class FinancialTracker {
 
             if (transaction.getDate().isAfter(startDate.minusDays(1)) && transaction.getDate().isBefore(endDate.plusDays(1))) {
                 System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Type: " + transaction.getDescription() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + transaction.getAmount() + "\n");
-                System.out.println("===================================================================================================================================");
+                System.out.println("。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。");
                 found = true;
             }
         }
@@ -331,7 +337,7 @@ public class FinancialTracker {
             if (vendorName.equalsIgnoreCase(transaction.getVendor())) {
 
                 System.out.println(" Date: " + transaction.getDate() + "|" + " Time: " + transaction.getTime() + "|" + " Type: " + transaction.getDescription() + "|" + " Vendor: " + transaction.getVendor() + "|" + " Price: " + transaction.getAmount() + "\n");
-                System.out.println("===================================================================================================================================");
+                System.out.println("。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。");
                 found = true;
             }
         }

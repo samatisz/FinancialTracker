@@ -1,4 +1,4 @@
-# Financial Tracker
+# Financial Tracker Application
 
 ## Description of the Project
 
@@ -63,7 +63,7 @@ List resources such as tutorials, articles, or documentation that helped you dur
 
 ## Thanks
 
-Thank you for helping put the code together and for explaining terminology: Paul, Ben, Manvir, and Husnain. 
 
 - Thank you to [Raymond] for continuous support and guidance.
-- A special thanks to Steel Potatoes team for the teamwork and friendship during this project.
+- Thank you to the Steel Potatoes team for the teamwork and friendship during this project.
+- A special thanks to Paul, Ben, Husnain, Aisha, and my friend Mohammed for helping me to complete this project. 
