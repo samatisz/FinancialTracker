@@ -111,7 +111,7 @@ public class FinancialTracker {
 
             BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true));
             writer.write(date.format(DATE_FORMATTER) + "|" + time.format(TIME_FORMATTER) + "|" + description + "|" + vendor + "|" + amount);
-            System.out.println("===================================================================================================================================");
+            System.out.println("============================================================_=======================================================================");
             writer.newLine();
             System.out.println("The deposit has been added successfully!");
             writer.close();
