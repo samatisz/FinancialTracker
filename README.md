@@ -2,7 +2,8 @@
 
 ## Description of the Project
 
-Briefly describe what this Java console application does. Mention its purpose and who the intended users are. Explain the main functionality and what problems it aims to solve.
+This application is used to keep track of finances. It can be used by (in this case) a single person, or a company. Transactions such as payments made and deposits are shown within it.
+
 
 ![Class Diagram](path/to/your/class_diagram.png)
 
@@ -15,13 +16,9 @@ List the user stories that guided the development of your application. Format th
 - As a user, I want to be able to search by the vendor so that I can see where I spend my money the most frequently and keep track of transactions from certain places.
 - As a user, I want to easily search for transactions within a certain frame of time.
 
-## Setup
+### Setup and Prerequisites
 
-Instructions on how to set up and run the project using IntelliJ IDEA.
-
-### Prerequisites
-
-- IntelliJ IDEA: Ensure you have IntelliJ IDEA installed, which you can download from [here](https://www.jetbrains.com/idea/download/).
+- IntelliJ IDEA: Ensure you have IntelliJ IDEA installed in order to run this program.
 - Java SDK: Make sure Java SDK is installed and configured in IntelliJ.
 
 ### Running the Application in IntelliJ
@@ -29,19 +26,19 @@ Instructions on how to set up and run the project using IntelliJ IDEA.
 Follow these steps to get your application running within IntelliJ IDEA:
 
 1. Open IntelliJ IDEA.
-2. Select "Open" and navigate to the directory where you cloned or downloaded the project.
+2. Select "Open" and navigate to the directory where you cloned or downloaded the project. (File name: FinancialTracker)
 3. After the project opens, wait for IntelliJ to index the files and set up the project.
-4. Find the main class with the `public static void main(String[] args)` method.
-5. Right-click on the file and select 'Run 'YourMainClassName.main()'' to start the application.
+4. Find the main method within the `FinancialTracker class` that holds the main method.
+5. Click on the green arrow next to the bug logo at the top of the screen to run the program.
 
 ## Technologies Used
 
-- Java: Mention the version you are using.
-- Any additional libraries or frameworks used in the project.
+- Java: Java JDK- Coretto 17
+- GitHub
 
 ## Demo
 
-Include screenshots or GIFs that show your application in action. Use tools like [Giphy Capture](https://giphy.com/apps/giphycapture) to record a GIF of your application.
+Here are some screenshots of the program, showing the methods and classes used to create it. 
 
 ![Screenshot 2024-05-02 151753](https://github.com/samatisz/FinancialTracker/assets/166551695/71dd16ac-e948-49bf-8cf8-69cb449fb3a8)
 ![image](https://github.com/samatisz/FinancialTracker/assets/166551695/5a457186-04be-4c27-b853-1a9118210b85)
@@ -61,24 +58,24 @@ Include screenshots or GIFs that show your application in action. Use tools like
 
 Outline potential future enhancements or functionalities you might consider adding:
 
-- Additional feature to be developed.
-- Improvement of current functionalities.
+- Would like to add a way to organize by dates (adding new transactions puts them at the bottom)
 
 ## Resources
 
 List resources such as tutorials, articles, or documentation that helped you during the project.
 
-- [Java Programming Tutorial](https://www.example.com)
-- [Effective Java](https://www.example.com)
+- https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html
+- https://docs.oracle.com/javase/8/docs/api/java/time/temporal/TemporalAdjusters.html
+
 
 ## Team Members
 
-- **Name 1** - Specific contributions or roles.
-- **Name 2** - Specific contributions or roles.
+- **Shelby Matisz** - Programmer
+
 
 ## Thanks
 
-Express gratitude towards those who provided help, guidance, or resources:
+Thank you for helping put the code together and for explaining terminology: Paul, Ben, Manvir, and Husnain. 
 
-- Thank you to [Mentor's Name] for continuous support and guidance.
-- A special thanks to all teammates for their dedication and teamwork.
+- Thank you to [Raymond] for continuous support and guidance.
+- A special thanks to Steel Potatoes team for the teamwork and friendship during this project.
