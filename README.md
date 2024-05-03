@@ -2,10 +2,8 @@
 
 ## Description of the Project
 
-This application is used to keep track of finances. It can be used by (in this case) a single person, or a company. Transactions such as payments made and deposits are shown within it.
+This application is used to keep track of finances. It can be used by (in this case) a single person, or a company. Transactions such as payments made and deposits are shown within it. New transactions can be added using the methods and the .csv file. 
 
-
-![Class Diagram](path/to/your/class_diagram.png)
 
 ## User Stories
 
