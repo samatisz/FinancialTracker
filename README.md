@@ -39,8 +39,10 @@ Follow these steps to get your application running within IntelliJ IDEA:
 ## Demo
 
 Here are some screenshots of the program, showing the methods and classes used to create it. 
+![Screenshot 2024-05-02 233334](https://github.com/samatisz/FinancialTracker/assets/166551695/1c7f028a-314c-4203-9744-01785bd74892)
+![Screenshot 2024-05-02 233449](https://github.com/samatisz/FinancialTracker/assets/166551695/2bf166c2-3430-46cf-b2cf-80261da8cd22)
+![Screenshot 2024-05-02 233531](https://github.com/samatisz/FinancialTracker/assets/166551695/d3787bd2-b786-4253-a56c-4c7f62042db1)
 
-PUT IMG HERE
 
 ## Future Work
 
